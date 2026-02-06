@@ -32,9 +32,13 @@ export function Chat() {
       setConnected(false);
     });
 
-    s.on('chat:response', (msg: Message) => {
+    s.on('chat:response', (msg: any) => {
       console.log('Received response:', msg);
-      setMessages(prev => [...prev, { role: 'assistant', ...msg }]);
+      setMessages(prev => [...prev, { 
+        role: 'assistant',
+        text: msg.text,
+        timestamp: msg.timestamp
+      }]);
     });
 
     s.on('chat:error', (error: any) => {
