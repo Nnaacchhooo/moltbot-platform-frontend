@@ -25,6 +25,11 @@ export function Chat() {
     s.on('connect', () => {
       console.log('Connected to WebSocket');
       setConnected(true);
+      
+      // Register user with backend
+      const userId = localStorage.getItem('userId') || `user-${Date.now()}`;
+      localStorage.setItem('userId', userId);
+      s.emit('chat:register', { userId });
     });
 
     s.on('disconnect', () => {
